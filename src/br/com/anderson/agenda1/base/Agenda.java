@@ -5,10 +5,9 @@ public class Agenda {
     
     // fazer uma tabela, ou seja uma matriz(vetor[][])
     private Object[][] registros = new Object[0][5];
-    private int cod;
-    
     
     //Métodos
+    
     /**
      * Será inserido um novo registro de agendamento na agenda da pessoa
      * @param p é a pessoa que será agendada
@@ -43,10 +42,20 @@ public class Agenda {
     public void consultar_Registro_Agenda(){
         int cod = 0;
         while(this.registros.length != 0 && cod < this.registros.length){
+            int s = Integer.parseInt(this.registros[cod][1].toString());
+            int d = Integer.parseInt(this.registros[cod][2].toString());
+            int m = Integer.parseInt(this.registros[cod][3].toString());
+            
+            String ses = (s < 10)? "0" + Integer.toString(s) : Integer.toString(s);
+            String dia = (d < 10)? "0" + Integer.toString(d) : Integer.toString(d);
+            String mes = (m < 10)? "0" + Integer.toString(m) : Integer.toString(m);
+            
+            String sub_classe_pessoa = (this.registros[cod][0] instanceof br.com.anderson.agenda1.pessoas.Cliente)? "Cliente: " : "Profissional: ";
+            
             System.out.println("----- " + (cod + 1) + "º REGISTRO -----");
-            System.out.println("Pessoa: " + this.registros[cod][0].toString());
-            System.out.println("Data: " + this.registros[cod][2].toString() + "/" + this.registros[cod][3].toString() + "/" + this.registros[cod][4].toString());
-            System.out.println("Sessão: " + this.registros[cod][1].toString());
+            System.out.println(sub_classe_pessoa + this.registros[cod][0].toString());
+            System.out.print("Sessão: " + ses);
+            System.out.println("     Data: " + dia + "/" + mes + "/" + this.registros[cod][4].toString());
             cod++;
         }
     }
@@ -60,20 +69,17 @@ public class Agenda {
      * @param a é o ano que será agendado
      * @return retorna true se stiver disponípel para agendamento, caso contrário retorna false
      */
-    public boolean disponivel_essa_sessao(Pessoa p, int s, int d, int m, int a ){
-        boolean r = true;
-        
+    public boolean disponivel_essa_sessao(Pessoa p, int s, int d, int m, int a ){        
         for(int agendamento = 0; agendamento < p.agenda.registros.length; agendamento++){
             if(Integer.parseInt(p.agenda.registros[agendamento][1].toString()) == s &&
             Integer.parseInt(p.agenda.registros[agendamento][2].toString()) == d &&
             Integer.parseInt(p.agenda.registros[agendamento][3].toString()) == m &&
             Integer.parseInt(p.agenda.registros[agendamento][4].toString()) == a){
-                r = false;
+                return false;
             }
             
         }
-        
-        return r;
+        return true;
     }
     
 /**
@@ -91,5 +97,4 @@ public class Agenda {
             }
         }        
     }
-           
 }

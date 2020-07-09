@@ -16,7 +16,7 @@ public class Cliente extends Pessoa{
     
     
     // Objeto
-    
+   
     public Cliente(String nome, String sexo, String email, String celular, String rg, String cpf){
         super(nome, sexo, email, celular, rg, cpf);
         this.setCod(Cliente.getCodCliente());
@@ -35,16 +35,7 @@ public class Cliente extends Pessoa{
         }else{
             System.out.println("ERRO - JÁ EXISTE UM AGENDAMENTO NESSA DATA E SESSÃO!!!");
         }
-        
-        
-        //teste
-                
-        Profissional cpro = (Profissional) p2;
-        
-        
-        
-        //p2.agenda.getAno();
-        //p1.getAgenda().inserir_Registro_Agenda(p2, s, d, m, a);
+                       
     }
     
     public void teste(Cliente c){
