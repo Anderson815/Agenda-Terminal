@@ -4,12 +4,10 @@ import java.util.Scanner;
 import br.com.anderson.agenda1.pessoas.Cliente;
 import br.com.anderson.agenda1.pessoas.Profissional;
 
-import br.com.anderson.agenda1.base.Pessoa;
-
 public class Agenda10 {
     
     public static void main(String[] args) {
-        
+                
         Cliente[] c = new Cliente[100];
         Profissional[] p = new Profissional[10];
         
@@ -46,11 +44,11 @@ public class Agenda10 {
 
                             switch(op2){
                                 case 1:
-                                    c[Cliente.getCodCliente()] = Agenda10.telaCliente1();
+                                    c[Cliente.getCodCliente()] = Telas_Cliente.cadastrar();
                                     break;
                                 case 2:
-                                    int codCliente = Agenda10.telaCliente2_1(c);
-                                    c[codCliente] = Agenda10.telaCliente2_2(c[codCliente], p);
+                                    int codCliente = Telas_Cliente.consultar(c);
+                                    c[codCliente] = Telas_Cliente.opcoes_Cliente(c[codCliente], p);
                                     break;
                                 case 3:
                                     break;
@@ -75,11 +73,11 @@ public class Agenda10 {
 
                             switch(op2){
                                 case 1:
-                                    p[Profissional.getCodProfissional()] =  Agenda10.telaProfissional1();
+                                    p[Profissional.getCodProfissional()] =  Telas_Profissional.cadastrar();
                                     break;
                                 case 2:
-                                    int cod = Agenda10.telaProfissional2_1(p);
-                                    p[cod] = Agenda10.telaProfissional2_2(p[cod]);
+                                    int cod = Telas_Profissional.consultar(p);
+                                    p[cod] = Telas_Profissional.opcoes_Profissional(p[cod]);
                                     break;
                                 case 3:
                                     break;
@@ -106,189 +104,9 @@ public class Agenda10 {
             }   
         }while(repetir);
         
-    }
+    }   
     
-    // Métodos das Telas Principais do Cliente
-    
-    public static Cliente telaCliente1(){
-        Scanner leitor = new Scanner(System.in);
-        String[] dados = new String[6];
-        Cliente c;
-        
-        System.out.println("");
-        System.out.println("----- TELA CADASTRAR CLIENTE -----");
-        System.out.print("Nome: ");
-        dados[0] = leitor.next();
-        System.out.print("Sexo: ");
-        dados[1] = leitor.next();
-        System.out.print("E-Mail: ");
-        dados[2] = leitor.next();
-        System.out.print("Celular: ");
-        dados[3] = leitor.next();
-        System.out.print("RG: ");
-        dados[4] = leitor.next();
-        System.out.print("CPF: ");
-        dados[5] = leitor.next();
-        
-        c = new Cliente(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
-        System.out.println("REGISTRO CADASTRADO COM SUCESSO");
-        return c;
-    }
-    
-    //Usuário recebe as informações do registro
-    public static int telaCliente2_1(Cliente[] clientes){
-        System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");
-        Cliente c = Agenda10.codCliente(clientes);
-        int r = 0;
-        if(c != null){
-            c.consultarR();
-            r = c.getCod();
-        }
-        return r;
-    }
-    
-    //Usuário toma decisão
-    public static Cliente telaCliente2_2(Cliente c, Profissional[] ps){
-        String r = "";
-        Scanner leitor = new Scanner(System.in);
-        
-        if(c != null){
-            do{
-                System.out.println("\nOpções: ");
-                System.out.println("    A - ALTERAR");
-                System.out.println("    D - DELETAR");
-                System.out.println("    AG - AGENDA");
-                System.out.println("    S - Sair");
-                System.out.print("Escolha uma das opções (letras): ");
-                r = leitor.next();
-            }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
-
-            // se for alterar
-            if(r.equals("a")){
-                Agenda10.casoAltereCliente(c);
-            }else if(r.equals("d")){
-                c = Agenda10.casoDeleteCliente(c);
-            }else if(r.equals("ag")){
-                Agenda10.casoAgendaCliente(c, ps);
-            }
-        }else{
-            System.out.println("!!! ERRO - O CÓDIGO NÃO É VÁLIDO !!!");
-        }
-        return c;
-    }
-    
-    public static void casoAltereCliente(Cliente c){
-        int ndado;
-        String dado;
-        boolean repetir = false;
-        Scanner leitor = new Scanner(System.in);
-        
-        do{
-            System.out.print("Qual dado você quer alterar(numeros): ");
-            ndado = leitor.nextInt();
-            if((ndado < 1 || ndado > 6) || ndado == 2){
-                System.out.println("\n!!! Coloque um campo válido !!!");
-                repetir = true;
-            }else{
-                repetir = false;
-            }
-        }while(repetir);
-        System.out.print("\nInforme o valor desse dado: ");
-        dado = leitor.next(); 
-
-        c.alterarR(dado, ndado);
-        System.out.println("CAMPO ALTERADO COM SUCESSO");
-    }
-    
-    public static Cliente casoDeleteCliente(Cliente c){
-        Scanner leitor = new Scanner(System.in);
-        String r = "";
-        
-        do{
-            System.out.print("Tem certeza que deseja DELETAR esse registro? (S/N): ");
-            r = leitor.next();
-            
-            if(!r.equals("s") && !r.equals("n")){
-                System.out.println("OPÇÃO INVÁLIDA");
-            }
-        }while(!r.equals("s") && !r.equals("n"));
-        if(r.equals("s")){
-           c = null;
-        }
-        
-        System.out.println("REGISTRO DELETADO COM SUCESSO");
-        return c;
-    }
-
-    public static void casoAgendaCliente(Cliente c, Profissional[] ps){
-        Scanner leitor = new Scanner(System.in);
-        int r = 0;
-        
-        do{
-            do{
-                System.out.println("\n----- TELA OPÇÕES AGENDA -----");
-                System.out.println("1 - Agendar");
-                System.out.println("2 - Agendamentos");
-                System.out.println("3 - Sair");
-                System.out.print("Escolha uma das opções: ");
-                r = leitor.nextInt();
-
-                if(r < 1 || r > 3){
-                    System.out.println("OPÇÃO INVÁLIDA");
-                }
-            }while(r < 1 || r > 3);
-
-            switch(r){
-                case 1:
-                    Agenda10.casoAgenda_Agendar1(c, ps);
-                    break;
-                case 2:
-                    Agenda10.casoAgenda_Agendamentos2(c);
-                    break;
-                case 3:
-                    break;
-            }
-        }while(r != 3);
-    }
-    
-    public static void casoAgenda_Agendar1(Cliente c, Profissional[] ps){
-        Scanner leitor = new Scanner(System.in);
-        int r[] = new int[4];
-        Profissional p = null;
-        
-        System.out.println("");
-        System.out.println("----- TELA PARA AGENDAR -----");
-        p = Agenda10.codProfissional(ps);
-              
-        System.out.print("Sessão: ");
-        r[0] = leitor.nextInt();
-        System.out.print("Dia: ");
-        r[1] = leitor.nextInt();
-        System.out.print("Mês: ");
-        r[2] = leitor.nextInt();
-        System.out.print("Ano: ");
-        r[3] = leitor.nextInt();
-        
-        c.agendar(c, p, r[0], r[1], r[2], r[3]);
-        
-    }
-    
-    public static void casoAgenda_Agendamentos2(Cliente c){
-        c.getAgenda().consultar_Registro_Agenda();
-        c.getAgenda().toString();
-    }
-    
-    public static Cliente codCliente(Cliente[] c){
-        Cliente r;
-        Scanner leitor = new Scanner(System.in);
-        int cod = 0; 
-        
-        System.out.print("Informe o código Cliente: ");
-        cod = leitor.nextInt();
-        
-        return r = c[cod];
-    }    
-    
+    /*
     // Métodos das Telas Principais do Profissional
     public static Profissional telaProfissional1(){
         Scanner leitor = new Scanner(System.in);
@@ -448,5 +266,5 @@ public class Agenda10 {
         
         return r = p[cod];
     }
-          
+     */   
 }
