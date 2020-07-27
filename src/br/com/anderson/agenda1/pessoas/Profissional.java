@@ -40,7 +40,7 @@ public class Profissional extends Pessoa{
     public Profissional(String nome, String sexo, String email, String celular, String rg, String cpf, String funcao){
         super(nome, sexo, email, celular, rg, cpf);
         this.setFuncao(funcao);
-        this.setCod(Profissional.getCodProfissional());
+        //this.setCod(Profissional.getCodProfissional());
         Profissional.setCodProfissional(Profissional.getCodProfissional() + 1);
     }
     

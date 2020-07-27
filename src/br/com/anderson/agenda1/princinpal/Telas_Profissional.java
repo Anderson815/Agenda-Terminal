@@ -2,6 +2,7 @@ package br.com.anderson.agenda1.princinpal;
 
 import br.com.anderson.agenda1.pessoas.Profissional;
 import java.util.Scanner;
+import java.util.List;
 
 public class Telas_Profissional {
     public static Profissional cadastrar(){
@@ -32,25 +33,20 @@ public class Telas_Profissional {
     }
     
     //Usuário recebe as informações do registro
-    public static int consultar(Profissional[] profissional){
+    public static int consultar(List<Profissional> profissional) throws br.com.anderson.agenda1.erro.CodInvalido{
         System.out.println("\n----- TELA DE CONSULTA PROFISSIONAL -----");
         Profissional p = Telas_Profissional.cod_Profissional(profissional);
-        int r = 0;
-        
-        if(p != null){
-            p.consultarR();
-            r = p.getCod();
-        }
-        return r;
+        return profissional.indexOf(p);
     }
     
     //Usuário toma decisão
-    public static Profissional opcoes_Profissional(Profissional p){
+    public static void opcoes_Profissional(List<Profissional> profissional, Profissional p){
         String r = "";
         Scanner leitor = new Scanner(System.in);
         
         if(p != null){
             do{
+                p.consultarR();
                 System.out.println("\nOpções: ");
                 System.out.println("    A - ALTERAR");
                 System.out.println("    D - DELETAR");
@@ -64,14 +60,13 @@ public class Telas_Profissional {
             if(r.equals("a")){
                 Telas_Profissional.opcoes_Profissional_Alterar(p);
             }else if(r.equals("d")){
-                p = Telas_Profissional.opcoes_Profissional_Deletar(p);
+                Telas_Profissional.opcoes_Profissional_Deletar(profissional, p);
             }else if(r.equals("ag")){
                 Telas_Profissional.opcoes_Profissional_Agenda(p);
             }
         }else{
             System.out.println("!!!O código não é válido!!!");
         }
-        return p;
     }
     
     public static void opcoes_Profissional_Alterar(Profissional p){
@@ -86,9 +81,7 @@ public class Telas_Profissional {
             if((ndado < 1 || ndado > 7) || ndado == 2){
                 System.out.println("\n!!! Coloque um campo válido !!!");
                 repetir = true;
-            }else{
-                repetir = false;
-                }
+            }else repetir = false;
         }while(repetir);
         System.out.print("\nInforme o valor desse dado: ");
         dado = leitor.next(); 
@@ -97,7 +90,7 @@ public class Telas_Profissional {
         System.out.println("CAMPO ALTERADO COM SUCESSO");
     }
     
-    public static Profissional opcoes_Profissional_Deletar(Profissional p){
+    public static void opcoes_Profissional_Deletar(List<Profissional> profissional, Profissional p){
         Scanner leitor = new Scanner(System.in);
         String r = "";
         
@@ -110,11 +103,9 @@ public class Telas_Profissional {
             }
         }while(!r.equals("s") && !r.equals("n"));
         if(r.equals("s")){
-           p = null;
-        }
-        
+           profissional.remove(p);
+        }      
         System.out.println("REGISTRO DELETADO COM SUCESSO");
-        return p;
     }    
     
     public static void opcoes_Profissional_Agenda(Profissional p){
@@ -152,14 +143,17 @@ public class Telas_Profissional {
         p.getAgenda().consultar_Registro_Agenda();
     }
     
-    public static Profissional cod_Profissional(Profissional[] p){
+    public static Profissional cod_Profissional(List<Profissional> p) throws br.com.anderson.agenda1.erro.CodInvalido{
         Profissional r;
         Scanner leitor = new Scanner(System.in);
         int cod = 0; 
         
         System.out.print("Informe o código Profissional: ");
         cod = leitor.nextInt();
+        cod--;
         
-        return r = p[cod];
+        if(cod < 0 || cod >= p.size()) throw new br.com.anderson.agenda1.erro.CodInvalido();
+        
+        return r = p.get(cod);
     }
 }

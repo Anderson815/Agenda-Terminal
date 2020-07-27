@@ -3,6 +3,7 @@ package br.com.anderson.agenda1.princinpal;
 import br.com.anderson.agenda1.pessoas.Cliente;
 import br.com.anderson.agenda1.pessoas.Profissional;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  *
@@ -36,45 +37,45 @@ public class Telas_Cliente {
     }
     
     
-    public static int consultar(Cliente[] clientes){
-        System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");
-        Cliente c = Telas_Cliente.cod_Cliente(clientes);
-        int r = 0;
-        if(c != null){
-            c.consultarR();
-            r = c.getCod();
+    public static int consultar(List<Cliente> lc) throws br.com.anderson.agenda1.erro.CodInvalido{
+        Scanner leitor = new Scanner(System.in);
+        int cod = 0;
+        
+        System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");                
+        System.out.print("Informe o código Cliente: ");
+        cod = leitor.nextInt();
+        cod--;        
+        if(cod < 0 || cod >= lc.size()){
+            throw new br.com.anderson.agenda1.erro.CodInvalido();
         }
-        return r;
+        
+        return cod;
     }
     
     //Usuário toma decisão
-    public static Cliente opcoes_Cliente(Cliente c, Profissional[] ps){
+    public static void opcoes_Cliente(List<Cliente> lc, Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
         String r = "";
         Scanner leitor = new Scanner(System.in);
-        
-        if(c != null){
-            do{
-                System.out.println("\nOpções: ");
-                System.out.println("    A - ALTERAR");
-                System.out.println("    D - DELETAR");
-                System.out.println("    AG - AGENDA");
-                System.out.println("    S - Sair");
-                System.out.print("Escolha uma das opções (letras): ");
-                r = leitor.next();
-            }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
 
-            // se for alterar
-            if(r.equals("a")){
-                Telas_Cliente.opcoes_Cliente_Alterar(c);
-            }else if(r.equals("d")){
-                c = Telas_Cliente.opcoes_Cliente_Deletar(c);
-            }else if(r.equals("ag")){
-                Telas_Cliente.opcoes_Cliente_Agenda(c, ps);
-            }
-        }else{
-            System.out.println("!!! ERRO - O CÓDIGO NÃO É VÁLIDO !!!");
+        do{
+            c.consultarR();
+            System.out.println("\nOpções: ");
+            System.out.println("    A - ALTERAR");
+            System.out.println("    D - DELETAR");
+            System.out.println("    AG - AGENDA");
+            System.out.println("    S - Sair");
+            System.out.print("Escolha uma das opções (letras): ");
+            r = leitor.next();
+        }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
+
+        // se for alterar
+        if(r.equals("a")){
+            Telas_Cliente.opcoes_Cliente_Alterar(c);
+        }else if(r.equals("d")){
+            Telas_Cliente.opcoes_Cliente_Deletar(lc, c);
+        }else if(r.equals("ag")){
+            Telas_Cliente.opcoes_Cliente_Agenda(c, ps);
         }
-        return c;
     }
     
     public static void opcoes_Cliente_Alterar(Cliente c){
@@ -89,9 +90,7 @@ public class Telas_Cliente {
             if((ndado < 1 || ndado > 6) || ndado == 2){
                 System.out.println("\n!!! Coloque um campo válido !!!");
                 repetir = true;
-            }else{
-                repetir = false;
-            }
+            }else repetir = false;
         }while(repetir);
         System.out.print("\nInforme o valor desse dado: ");
         dado = leitor.next(); 
@@ -100,7 +99,7 @@ public class Telas_Cliente {
         System.out.println("CAMPO ALTERADO COM SUCESSO");
     }
     
-    public static Cliente opcoes_Cliente_Deletar(Cliente c){
+    public static void opcoes_Cliente_Deletar(List<Cliente> lc, Cliente c){
         Scanner leitor = new Scanner(System.in);
         String r = "";
         
@@ -113,14 +112,13 @@ public class Telas_Cliente {
             }
         }while(!r.equals("s") && !r.equals("n"));
         if(r.equals("s")){
-           c = null;
+           lc.remove(c);
         }
         
         System.out.println("REGISTRO DELETADO COM SUCESSO");
-        return c;
     }
 
-    public static void opcoes_Cliente_Agenda(Cliente c, Profissional[] ps){
+    public static void opcoes_Cliente_Agenda(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
         Scanner leitor = new Scanner(System.in);
         int r = 0;
         
@@ -151,7 +149,7 @@ public class Telas_Cliente {
         }while(r != 3);
     }
     
-    public static void opcoes_Cliente_Agenda_Agendar(Cliente c, Profissional[] ps){
+    public static void opcoes_Cliente_Agenda_Agendar(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
         Scanner leitor = new Scanner(System.in);
         int r[] = new int[4];
         Profissional p = null;
@@ -180,16 +178,5 @@ public class Telas_Cliente {
     
     public static void opcoes_Cliente_Agenda_Agendamentos(Cliente c){
         c.getAgenda().consultar_Registro_Agenda();
-    }
-    
-    public static Cliente cod_Cliente(Cliente[] c){
-        Cliente r;
-        Scanner leitor = new Scanner(System.in);
-        int cod = 0; 
-        
-        System.out.print("Informe o código Cliente: ");
-        cod = leitor.nextInt();
-        
-        return r = c[cod];
-    }    
+    }   
 }

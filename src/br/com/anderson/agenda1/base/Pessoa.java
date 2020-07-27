@@ -2,14 +2,14 @@ package br.com.anderson.agenda1.base;
 public abstract class Pessoa {
     // Atributos
     private String nome, rg, cpf, sexo, celular, email;
-    private int cod;
     protected Agenda agenda = new Agenda();
 
     // Métodos de Interface
     
     //mudar o método consultarR() para toString()
     public void consultarR(){
-        System.out.println("\n1 - Nome: " + this.getNome());
+        System.out.println("\n------------------------------");
+        System.out.println("1 - Nome: " + this.getNome());
         System.out.println("2 - Sexo: " + this.getSexo());
         System.out.println("3 - E-Mail: " + this.getEmail());
         System.out.println("4 - Celular: " + this.getCelular());
@@ -96,14 +96,6 @@ public abstract class Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public int getCod() {
-        return cod;
-    }
-
-    public void setCod(int cod) {
-        this.cod = cod;
     }
 
     public Agenda getAgenda() {

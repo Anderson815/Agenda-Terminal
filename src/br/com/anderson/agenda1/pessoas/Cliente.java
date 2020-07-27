@@ -3,25 +3,11 @@ import br.com.anderson.agenda1.base.Pessoa;
 
 public class Cliente extends Pessoa{    
     // Classe
-    
-    private static int codCliente = 1;
-    
-    public static int getCodCliente() {
-        return codCliente;
-    }
-
-    public static void setCodCliente(int codCliente) {
-        Cliente.codCliente = codCliente;
-    }
-    
-    
+        
     // Objeto
    
     public Cliente(String nome, String sexo, String email, String celular, String rg, String cpf){
-        super(nome, sexo, email, celular, rg, cpf);
-        this.setCod(Cliente.getCodCliente());
-        Cliente.setCodCliente(Cliente.getCodCliente() + 1);
-        
+        super(nome, sexo, email, celular, rg, cpf);  
     }
     
     public void agendar(Pessoa p1, Pessoa p2, int s, int d, int m, int a){
