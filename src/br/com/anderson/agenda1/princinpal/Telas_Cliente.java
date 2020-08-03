@@ -45,9 +45,7 @@ public class Telas_Cliente {
         System.out.print("Informe o código Cliente: ");
         cod = leitor.nextInt();
         cod--;        
-        if(cod < 0 || cod >= lc.size()){
-            throw new br.com.anderson.agenda1.erro.CodInvalido();
-        }
+        if(cod < 0 || cod >= lc.size()) throw new br.com.anderson.agenda1.erro.CodInvalido();
         
         return cod;
     }
@@ -68,13 +66,16 @@ public class Telas_Cliente {
             r = leitor.next();
         }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
 
-        // se for alterar
-        if(r.equals("a")){
-            Telas_Cliente.opcoes_Cliente_Alterar(c);
-        }else if(r.equals("d")){
-            Telas_Cliente.opcoes_Cliente_Deletar(lc, c);
-        }else if(r.equals("ag")){
-            Telas_Cliente.opcoes_Cliente_Agenda(c, ps);
+        switch(r){
+            case "a": 
+                Telas_Cliente.opcoes_Cliente_Alterar(c);
+                break;
+            case "d":
+                Telas_Cliente.opcoes_Cliente_Deletar(lc, c);
+                break;
+            case "ag":
+                Telas_Cliente.opcoes_Cliente_Agenda(c, ps);
+                break;
         }
     }
     
@@ -107,13 +108,11 @@ public class Telas_Cliente {
             System.out.print("Tem certeza que deseja DELETAR esse registro? (S/N): ");
             r = leitor.next();
             
-            if(!r.equals("s") && !r.equals("n")){
-                System.out.println("OPÇÃO INVÁLIDA");
-            }
+            if(!r.equals("s") && !r.equals("n")) System.out.println("OPÇÃO INVÁLIDA");
+            
         }while(!r.equals("s") && !r.equals("n"));
-        if(r.equals("s")){
-           lc.remove(c);
-        }
+        
+        if(r.equals("s"))lc.remove(c);
         
         System.out.println("REGISTRO DELETADO COM SUCESSO");
     }
@@ -131,9 +130,8 @@ public class Telas_Cliente {
                 System.out.print("Escolha uma das opções: ");
                 r = leitor.nextInt();
 
-                if(r < 1 || r > 3){
-                    System.out.println("OPÇÃO INVÁLIDA");
-                }
+                if(r < 1 || r > 3) System.out.println("OPÇÃO INVÁLIDA");
+                
             }while(r < 1 || r > 3);
 
             switch(r){

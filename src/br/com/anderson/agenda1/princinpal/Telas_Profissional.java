@@ -43,29 +43,28 @@ public class Telas_Profissional {
     public static void opcoes_Profissional(List<Profissional> profissional, Profissional p){
         String r = "";
         Scanner leitor = new Scanner(System.in);
-        
-        if(p != null){
-            do{
-                p.consultarR();
-                System.out.println("\nOpções: ");
-                System.out.println("    A - ALTERAR");
-                System.out.println("    D - DELETAR");
-                System.out.println("    AG - AGENDA");
-                System.out.println("    S - Sair");
-                System.out.print("Escolha uma das opções (letras): ");
-                r = leitor.next();
-            }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
 
-            // se for alterar
-            if(r.equals("a")){
+        do{
+            p.consultarR();
+            System.out.println("\nOpções: ");
+            System.out.println("    A - ALTERAR");
+            System.out.println("    D - DELETAR");
+            System.out.println("    AG - AGENDA");
+            System.out.println("    S - Sair");
+            System.out.print("Escolha uma das opções (letras): ");
+            r = leitor.next();
+        }while(!r.equals("s") && !r.equals("d") && !r.equals("a") && !r.equals("ag"));
+
+        switch(r){
+            case "a":
                 Telas_Profissional.opcoes_Profissional_Alterar(p);
-            }else if(r.equals("d")){
+                break;
+            case "d":
                 Telas_Profissional.opcoes_Profissional_Deletar(profissional, p);
-            }else if(r.equals("ag")){
+                break;
+            case "ag":
                 Telas_Profissional.opcoes_Profissional_Agenda(p);
-            }
-        }else{
-            System.out.println("!!!O código não é válido!!!");
+                break;
         }
     }
     
@@ -98,13 +97,12 @@ public class Telas_Profissional {
             System.out.print("Tem certeza que deseja DELETAR esse registro? (S/N): ");
             r = leitor.next();
             
-            if(!r.equals("s") && !r.equals("n")){
-                System.out.println("OPÇÃO INVÁLIDA");
-            }
+            if(!r.equals("s") && !r.equals("n")) System.out.println("OPÇÃO INVÁLIDA");
+            
         }while(!r.equals("s") && !r.equals("n"));
-        if(r.equals("s")){
-           profissional.remove(p);
-        }      
+        
+        if(r.equals("s")) profissional.remove(p); 
+        
         System.out.println("REGISTRO DELETADO COM SUCESSO");
     }    
     
@@ -116,27 +114,22 @@ public class Telas_Profissional {
             do{
                 System.out.println("\n----- TELA OPÇÕES AGENDA -----");
                 System.out.println("1 - Agendamentos");
-                System.out.println("2 - Consultar Agenda através de uma pessoa");
-                System.out.println("3 - Sair");
+                System.out.println("2 - Sair");
                 System.out.print("Escolha uma das opções: ");
                 r = leitor.nextInt();
 
-                if(r < 1 || r > 3){
-                    System.out.println("OPÇÃO INVÁLIDA");
-                }
-            }while(r < 1 || r > 3);
+                if(r < 1 || r > 2) System.out.println("OPÇÃO INVÁLIDA");
+                
+            }while(r < 1 || r > 2);
 
             switch(r){
                 case 1:
                     Telas_Profissional.opcoes_Profissional_Agenda_Agendamentos(p);
                     break;
                 case 2:
-                    
-                    break;
-                case 3:
                     break;
             }
-        }while(r != 3);
+        }while(r != 2);
     }
     
     public static void opcoes_Profissional_Agenda_Agendamentos(Profissional p){
