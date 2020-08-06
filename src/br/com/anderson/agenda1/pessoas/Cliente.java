@@ -3,11 +3,23 @@ import br.com.anderson.agenda1.base.Pessoa;
 
 public class Cliente extends Pessoa{    
     // Classe
-        
+    
+    public static int cod_Cliente = 1;
+    
+    public static void setCodCliente(){
+        cod_Cliente++;
+    }
+    
+    public static int getCodCliente(){
+        return cod_Cliente;
+    }
+    
     // Objeto
    
     public Cliente(String nome, String sexo, String email, String celular, String rg, String cpf){
         super(nome, sexo, email, celular, rg, cpf);  
+        this.setCod(Cliente.getCodCliente());
+        Cliente.setCodCliente();
     }
     
     public void agendar(Pessoa p1, Pessoa p2, int s, int d, int m, int a){
@@ -21,19 +33,6 @@ public class Cliente extends Pessoa{
         }else{
             System.out.println("ERRO - JÁ EXISTE UM AGENDAMENTO NESSA DATA E SESSÃO!!!");
         }
-                       
-    }
-    
-    public void teste(Cliente c){
-        
-    }
-    
-    public void teste1(Pessoa p){
-        
-        
-    }
-    
-    public void teste2(Profissional p){
-        
-    }
+               
+    }    
 }

@@ -6,6 +6,7 @@ import br.com.anderson.agenda1.pessoas.Profissional;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.anderson.agenda1.erro.CodInvalido;
+import br.com.anderson.agenda1.erro.SemRegistro;
 
 public class Agenda10 {
     
@@ -112,7 +113,9 @@ public class Agenda10 {
                 leitor.nextLine();
             }catch(CodInvalido e){
                 System.out.println(e.getMessage());
-            }   
+            }catch(SemRegistro erro){
+                System.out.println(erro.getMessage());
+            }
         }while(repetir);
         
     }   

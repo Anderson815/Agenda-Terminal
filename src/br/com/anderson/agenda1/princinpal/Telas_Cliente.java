@@ -2,6 +2,7 @@ package br.com.anderson.agenda1.princinpal;
 
 import br.com.anderson.agenda1.pessoas.Cliente;
 import br.com.anderson.agenda1.pessoas.Profissional;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.List;
 
@@ -37,17 +38,41 @@ public class Telas_Cliente {
     }
     
     
-    public static int consultar(List<Cliente> lc) throws br.com.anderson.agenda1.erro.CodInvalido{
+    public static int consultar(List<Cliente> lc) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         Scanner leitor = new Scanner(System.in);
         int cod = 0;
+        int indice_cod = 0;
         
-        System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");                
-        System.out.print("Informe o código Cliente: ");
-        cod = leitor.nextInt();
-        cod--;        
-        if(cod < 0 || cod >= lc.size()) throw new br.com.anderson.agenda1.erro.CodInvalido();
+        System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");  
+        if(lc.isEmpty()) throw new br.com.anderson.agenda1.erro.SemRegistro();
+        else{
+            System.out.println("(Cod) Nome\n");
+            for(int indice = 0; indice < lc.size(); indice++){
+                String espaco_zero =  "";
+                
+                if(lc.get(indice).getCod() - 10 < 0) espaco_zero = "00";
+                else if(lc.get(indice).getCod() - 100 < 0) espaco_zero = "0";
+                else espaco_zero = ""; 
+                
+                System.out.println("(" + espaco_zero + lc.get(indice).getCod() + ") " + lc.get(indice).getNome());
+            }
+            
+            System.out.print("\nInforme o código do Cliente: ");
+            cod = leitor.nextInt();
+                    
+            boolean existe = false;
+            
+            for(int indice = 0; indice < lc.size(); indice++){
+                if(lc.get(indice).getCod() == cod){
+                    existe = true;
+                    indice_cod = indice;
+                    break;
+                }
+            }
+            if(cod <= 0 || !existe) throw new br.com.anderson.agenda1.erro.CodInvalido();   
+        }
         
-        return cod;
+        return indice_cod;
     }
     
     //Usuário toma decisão

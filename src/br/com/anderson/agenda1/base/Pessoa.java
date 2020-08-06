@@ -1,7 +1,13 @@
 package br.com.anderson.agenda1.base;
 public abstract class Pessoa {
+    
+    public static void t(){ 
+    
+    }
+    
     // Atributos
     private String nome, rg, cpf, sexo, celular, email;
+    private int cod;
     protected Agenda agenda = new Agenda();
 
     // Métodos de Interface
@@ -104,6 +110,14 @@ public abstract class Pessoa {
 
     public void setAgenda(Agenda agenda) {
         this.agenda = agenda;
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
     }
     
     @Override
