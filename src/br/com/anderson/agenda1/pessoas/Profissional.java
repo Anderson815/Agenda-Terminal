@@ -7,8 +7,8 @@ public class Profissional extends Pessoa{
     
     private static int codProfissional = 1;
     
-    public static void setCodProfissional(int c){
-        Profissional.codProfissional = c;
+    public static void setCodProfissional(){
+        Profissional.codProfissional++;
     }
     
     public static int getCodProfissional(){
@@ -40,8 +40,8 @@ public class Profissional extends Pessoa{
     public Profissional(String nome, String sexo, String email, String celular, String rg, String cpf, String funcao){
         super(nome, sexo, email, celular, rg, cpf);
         this.setFuncao(funcao);
-        //this.setCod(Profissional.getCodProfissional());
-        Profissional.setCodProfissional(Profissional.getCodProfissional() + 1);
+        this.setCod(Profissional.getCodProfissional());
+        Profissional.setCodProfissional();
     }
     
     public String getFuncao() {

@@ -1,10 +1,6 @@
 package br.com.anderson.agenda1.base;
 public abstract class Pessoa {
     
-    public static void t(){ 
-    
-    }
-    
     // Atributos
     private String nome, rg, cpf, sexo, celular, email;
     private int cod;

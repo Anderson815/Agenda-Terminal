@@ -2,7 +2,6 @@ package br.com.anderson.agenda1.princinpal;
 
 import br.com.anderson.agenda1.pessoas.Cliente;
 import br.com.anderson.agenda1.pessoas.Profissional;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class Telas_Cliente {
         System.out.println("\n----- TELA DE CONSULTA CLIENTE -----");  
         if(lc.isEmpty()) throw new br.com.anderson.agenda1.erro.SemRegistro();
         else{
-            System.out.println("(Cod) Nome\n");
+            System.out.println("(Cod) Nome");
             for(int indice = 0; indice < lc.size(); indice++){
                 String espaco_zero =  "";
                 
@@ -76,7 +75,7 @@ public class Telas_Cliente {
     }
     
     //Usuário toma decisão
-    public static void opcoes_Cliente(List<Cliente> lc, Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
+    public static void opcoes_Cliente(List<Cliente> lc, Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         String r = "";
         Scanner leitor = new Scanner(System.in);
 
@@ -142,7 +141,7 @@ public class Telas_Cliente {
         System.out.println("REGISTRO DELETADO COM SUCESSO");
     }
 
-    public static void opcoes_Cliente_Agenda(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
+    public static void opcoes_Cliente_Agenda(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         Scanner leitor = new Scanner(System.in);
         int r = 0;
         
@@ -172,7 +171,7 @@ public class Telas_Cliente {
         }while(r != 3);
     }
     
-    public static void opcoes_Cliente_Agenda_Agendar(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido{
+    public static void opcoes_Cliente_Agenda_Agendar(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         Scanner leitor = new Scanner(System.in);
         int r[] = new int[4];
         Profissional p = null;
@@ -180,7 +179,7 @@ public class Telas_Cliente {
         System.out.println("");
         System.out.println("----- TELA PARA AGENDAR -----");
         try{
-            p = Telas_Profissional.cod_Profissional(ps);
+            p = ps.get(Telas_Profissional.cod_Profissional(ps));
 
             System.out.print("Sessão: ");
             r[0] = leitor.nextInt();

@@ -33,10 +33,45 @@ public class Telas_Profissional {
     }
     
     //Usuário recebe as informações do registro
-    public static int consultar(List<Profissional> profissional) throws br.com.anderson.agenda1.erro.CodInvalido{
+    public static int consultar(List<Profissional> lp) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         System.out.println("\n----- TELA DE CONSULTA PROFISSIONAL -----");
-        Profissional p = Telas_Profissional.cod_Profissional(profissional);
-        return profissional.indexOf(p);
+        int indice_cod = Telas_Profissional.cod_Profissional(lp);
+        return indice_cod;
+    }
+    
+    public static int cod_Profissional(List<Profissional> lp) throws br.com.anderson.agenda1.erro.SemRegistro, br.com.anderson.agenda1.erro.CodInvalido{
+        Scanner leitor = new Scanner(System.in);
+        int cod = 0; 
+        int indice_cod = 0;
+
+        if(lp.isEmpty()) throw new br.com.anderson.agenda1.erro.SemRegistro();
+        else{
+            
+            System.out.println("(Cod) Profissional");
+            
+            for(int contador = 0; contador < lp.size(); contador++){
+                String espaco_zero = "";
+                if(lp.get(contador).getCod() < 10) espaco_zero = "00";
+                else if(lp.get(contador).getCod() < 100) espaco_zero = "0";
+                
+                System.out.println("(" + (espaco_zero + lp.get(contador).getCod()) + ") " + lp.get(contador).getNome());
+            }
+            
+            System.out.print("\nInforme o código Profissional: ");
+            cod = leitor.nextInt();
+            boolean existe = false;
+            
+            for(Profissional p: lp){
+                if(p.getCod() == cod){
+                    existe = true;
+                    indice_cod = lp.indexOf(p);
+                    break;
+                }
+            }
+            
+            if(cod <= 0 || !existe) throw new br.com.anderson.agenda1.erro.CodInvalido();
+        }
+        return indice_cod;
     }
     
     //Usuário toma decisão
@@ -136,17 +171,4 @@ public class Telas_Profissional {
         p.getAgenda().consultar_Registro_Agenda();
     }
     
-    public static Profissional cod_Profissional(List<Profissional> p) throws br.com.anderson.agenda1.erro.CodInvalido{
-        Profissional r;
-        Scanner leitor = new Scanner(System.in);
-        int cod = 0; 
-        
-        System.out.print("Informe o código Profissional: ");
-        cod = leitor.nextInt();
-        cod--;
-        
-        if(cod < 0 || cod >= p.size()) throw new br.com.anderson.agenda1.erro.CodInvalido();
-        
-        return r = p.get(cod);
-    }
 }
