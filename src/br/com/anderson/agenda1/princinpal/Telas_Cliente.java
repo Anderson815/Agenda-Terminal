@@ -143,32 +143,39 @@ public class Telas_Cliente {
 
     public static void opcoes_Cliente_Agenda(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
         Scanner leitor = new Scanner(System.in);
-        int r = 0;
-        
+        int r = 3;
+               
         do{
+            System.out.println("\n--------- TELA AGENDA ---------");
+            c.getAgenda().consultar_Registro_Agenda();
+            
             do{
-                System.out.println("\n----- TELA OPÇÕES AGENDA -----");
-                System.out.println("1 - Agendar");
-                System.out.println("2 - Agendamentos");
-                System.out.println("3 - Sair");
-                System.out.print("Escolha uma das opções: ");
-                r = leitor.nextInt();
-
-                if(r < 1 || r > 3) System.out.println("OPÇÃO INVÁLIDA");
-                
-            }while(r < 1 || r > 3);
-
+            System.out.println("OPÇÕES:");
+            System.out.println("1 - Agendar");
+            System.out.println("2 - Cancelar");
+            System.out.println("3 - Sair da agenda");
+            System.out.print("Escolha uma das opções: ");
+            
+            r = leitor.nextInt();
+            
+            if(r < 1 || r > 3){
+                System.out.println("OPÇÃO INVÁLIDA");
+            }
+            }while(r <1 || r > 3);
+            
             switch(r){
                 case 1:
                     Telas_Cliente.opcoes_Cliente_Agenda_Agendar(c, ps);
                     break;
                 case 2:
-                    Telas_Cliente.opcoes_Cliente_Agenda_Agendamentos(c);
+                    Telas_Cliente.opcoes_Cliente_Agenda_Cancelar(c, ps);
                     break;
                 case 3:
                     break;
             }
+            
         }while(r != 3);
+
     }
     
     public static void opcoes_Cliente_Agenda_Agendar(Cliente c, List<Profissional> ps) throws br.com.anderson.agenda1.erro.CodInvalido, br.com.anderson.agenda1.erro.SemRegistro{
@@ -198,7 +205,42 @@ public class Telas_Cliente {
         }
     }
     
-    public static void opcoes_Cliente_Agenda_Agendamentos(Cliente c){
-        c.getAgenda().consultar_Registro_Agenda();
-    }   
+    public static void opcoes_Cliente_Agenda_Cancelar(Cliente c, List<Profissional> ps){
+        Scanner leitor = new Scanner(System.in);
+        int r = 0;
+        String conf = "";
+        
+        if(c.getAgenda().quantidade_registros() > 0){
+            do{
+                System.out.println("----- TELA PARA CANCELAR -----");
+                System.out.print("Digite o número do registro que você quer cancelar: ");
+                r = leitor.nextInt();
+                
+                if(r < 1 || r > c.getAgenda().quantidade_registros()){
+                    System.out.println("ERRO - REGISTRO INEXISTENTE\n");
+                }
+            }while(r < 1 || r > c.getAgenda().quantidade_registros()); 
+            do{
+                System.out.println("REGISTRO:\n");
+                r--;
+                c.getAgenda().consultar_Registro_Agenda(r);//alterado
+                System.out.print("\nDeseja mesmo cancelar esse agendamento? (S/N): ");
+                conf = leitor.next();
+                if(!conf.equals("s") && !conf.equals("n")) System.out.println("OPÇÃO INVÁLIDA");
+                else{
+                    if(conf.equals("s")){
+                        Profissional p = (Profissional) c.getAgenda().getPessoa(r);
+                        int rp = p.getAgenda().getCod(c.getAgenda().getRegistro(r));
+                        
+                        c.getAgenda().remover_Registro_Agenda(r);
+                        p.getAgenda().remover_Registro_Agenda(rp);
+                        
+                        // CONTINUAR AQUI
+                    }
+                }
+            }while(!conf.equals("s") && !conf.equals("n"));
+        }else{
+            System.out.println("NÃO TEM NADA AGENDADO PARA ESSE CLIENTE");
+        }
+    }
 }

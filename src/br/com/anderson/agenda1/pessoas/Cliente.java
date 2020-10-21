@@ -34,5 +34,9 @@ public class Cliente extends Pessoa{
             System.out.println("ERRO - JÁ EXISTE UM AGENDAMENTO NESSA DATA E SESSÃO!!!");
         }
                
-    }    
+    }
+
+    public void cancelar(int cod){
+        
+    }
 }

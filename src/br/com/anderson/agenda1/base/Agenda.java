@@ -52,12 +52,32 @@ public class Agenda {
             
             String sub_classe_pessoa = (this.registros[cod][0] instanceof br.com.anderson.agenda1.pessoas.Cliente)? "Cliente: " : "Profissional: ";
             
-            System.out.println("----- " + (cod + 1) + "º REGISTRO -----");
+            System.out.println("" + (cod + 1) + "º REGISTRO");
             System.out.println(sub_classe_pessoa + this.registros[cod][0].toString());
             System.out.print("Sessão: " + ses);
             System.out.println("     Data: " + dia + "/" + mes + "/" + this.registros[cod][4].toString());
+            System.out.println("-------------------------------");
             cod++;
         }
+    }
+    
+    /**
+     * Esse método escreve na tela somente os detalhes do registro informado
+     * @param cod é o indice do registro que deseja consultar
+     */
+    public void consultar_Registro_Agenda(int cod){
+        int s = Integer.parseInt(this.registros[cod][1].toString());
+        int d = Integer.parseInt(this.registros[cod][2].toString());
+        int m = Integer.parseInt(this.registros[cod][3].toString());
+        
+        String ses = s < 10? "0" + Integer.toString(s): Integer.toString(s);
+        String dia = d < 10? "0" + Integer.toString(d): Integer.toString(d);
+        String mes = m < 10? "0" + Integer.toString(m): Integer.toString(m);
+        
+        System.out.println((cod + 1) + "º REGISTRO");
+        System.out.println("Profissional: " + this.registros[cod][0].toString());
+        System.out.print("Sessão: " + ses);
+        System.out.println("     Data: " + dia + "/" + mes + "/" + this.registros[cod][4].toString());
     }
     
     /**
@@ -96,5 +116,32 @@ public class Agenda {
                 else this.registros[cod][coluna] = matriz[cod + 1][coluna];
             }
         }        
+    }
+    
+    public int quantidade_registros(){
+        return this.registros.length;
+    }
+    
+    public Object getPessoa(int cod){
+        return this.registros[cod][0]; //Pessoa do registro
+    }
+    
+    public int getCod(Object[] parametros){
+        int r = -1;
+        // o indice 0 está comparando dois objetoa diferentes, um é cliente e outro é profissional
+        for(int indice = 0; indice < this.registros.length; indice++){
+            if(Integer.parseInt(this.registros[indice][1].toString()) == Integer.parseInt(parametros[1].toString()) &&
+            Integer.parseInt(this.registros[indice][2].toString()) == Integer.parseInt(parametros[2].toString()) &&
+            Integer.parseInt(this.registros[indice][3].toString()) == Integer.parseInt(parametros[3].toString()) &&
+            Integer.parseInt(this.registros[indice][4].toString()) == Integer.parseInt(parametros[4].toString())){
+                r = indice;
+                break;
+            }
+        }
+        return r;
+    }
+    
+    public Object[] getRegistro(int cod){
+        return this.registros[cod];
     }
 }

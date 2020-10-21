@@ -144,31 +144,14 @@ public class Telas_Profissional {
     public static void opcoes_Profissional_Agenda(Profissional p){
         Scanner leitor = new Scanner(System.in);
         int r = 0;
+
+        System.out.println("\n--------- TELA AGENDA ---------");
+        p.getAgenda().consultar_Registro_Agenda();
         
         do{
-            do{
-                System.out.println("\n----- TELA OPÇÕES AGENDA -----");
-                System.out.println("1 - Agendamentos");
-                System.out.println("2 - Sair");
-                System.out.print("Escolha uma das opções: ");
-                r = leitor.nextInt();
-
-                if(r < 1 || r > 2) System.out.println("OPÇÃO INVÁLIDA");
-                
-            }while(r < 1 || r > 2);
-
-            switch(r){
-                case 1:
-                    Telas_Profissional.opcoes_Profissional_Agenda_Agendamentos(p);
-                    break;
-                case 2:
-                    break;
-            }
-        }while(r != 2);
+            System.out.print("\nPara sair aperte a tecla 0 e depois enter: ");
+            r = leitor.nextInt();
+        }while(r != 0);
     }
-    
-    public static void opcoes_Profissional_Agenda_Agendamentos(Profissional p){
-        p.getAgenda().consultar_Registro_Agenda();
-    }
-    
+
 }
