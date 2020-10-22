@@ -5,7 +5,7 @@
 
 <h2>:dart: Objetivo</h2>
 <p>Um sistema de agendamento que permite agendar clientes com profissionais no terminal</p>
-<p>Funcionalidades<p>
+<p>Funcionalidades:<p>
 <ul>
   <li>Cadastra, consulta, altera e remove clientes</li>
   <li>Cadastra, consulta, altera e remove profissionais</li>
@@ -13,7 +13,7 @@
   <li>Profissional pode consultar agendamento</li>
 </ul>
 
-<p>Principais telas</p>
+<p>Principais telas:</p>
 <img src="imagens/menu_principal.png">
 <img src="imagens/consulta_cliente.png">
 <img src="imagens/op_cliente.png">
