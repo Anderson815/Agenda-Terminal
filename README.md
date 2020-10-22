@@ -1,6 +1,6 @@
 <h1>Agenda Terminal</h1>
 <p>
-
+  Este foi um projeto que eu pensei em criar para praticar a maior quantidade de conhecimento relativo ao POO que eu adquiri com a apostila da caelum FJ-11 e com o curso de Java POO da plataforma Curso em Vídeo
 </p>
 
 <h2>:dart: Objetivo</h2>
