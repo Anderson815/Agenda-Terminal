@@ -13,6 +13,7 @@
   <li>Profissional pode consultar agendamento</li>
 </ul>
 
+<p>Principais telas</p>
 <img src="imagens/menu_principal.png">
 <img src="imagens/consulta_cliente.png">
 <img src="imagens/op_cliente.png">
