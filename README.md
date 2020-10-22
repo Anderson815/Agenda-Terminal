@@ -4,18 +4,19 @@
 </p>
 
 <h2>:dart: Objetivo</h2>
-<p>Uma agenda que possa ser usada no terminal</p>
-<img src="imagens/menu_principal.png">
-<img src="imagens/consulta_cliente.png">
-<img src="imagens/op_cliente.png">
-<img src="imagens/agenda.png">
-<p>Funcionalidades do sistema:</p>
+<p>Um sistema de agendamento que permite agendar clientes com profissionais no terminal</p>
+<p>Funcionalidades<p>
 <ul>
   <li>Cadastra, consulta, altera e remove clientes</li>
   <li>Cadastra, consulta, altera e remove profissionais</li>
   <li>Cliente pode agendar, consultar agenda e cancelar agendamento</li>
   <li>Profissional pode consultar agendamento</li>
 </ul>
+
+<img src="imagens/menu_principal.png">
+<img src="imagens/consulta_cliente.png">
+<img src="imagens/op_cliente.png">
+<img src="imagens/agenda.png">
 
 <h2>:mortar_board: Habilidades usadas</h2>
 <ul>
